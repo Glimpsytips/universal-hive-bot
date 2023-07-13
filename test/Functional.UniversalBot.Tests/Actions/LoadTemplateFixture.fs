@@ -27,14 +27,15 @@ let ``Load more advanced template from entity`` () =
             |> PipelineProcessData.addProperty "post_003" {| postId = 1; name = "3"; date = DateTimeOffset.Now.AddDays(-2)|}
             |> PipelineProcessData.addProperty "post_004" {| postId = 1; name = "4"; date = DateTimeOffset.Now.AddDays(-2)|}
 
-        let compiler 
-            = NettleEngine.GetCompiler ([|
-                new ReadEntityFunction (model) :> Functions.IFunction
-                new EnumerateEntityFunction (model) :> Functions.IFunction
-                new CompareDatesFunction() :> Functions.IFunction
-            |])
-        let execute = compiler.Compile (template)
-        let! output = execute.Invoke (model.properties, System.Threading.CancellationToken.None)
+        //let compiler 
+        //    = NettleEngine.GetCompiler ([|
+        //        new ReadEntityFunction (model) :> Functions.IFunction
+        //        new EnumerateEntityFunction (model) :> Functions.IFunction
+        //        new CompareDatesFunction() :> Functions.IFunction
+        //    |])
+        //let execute = compiler.Compile (template)
+        //let! output = execute.Invoke (model.properties, System.Threading.CancellationToken.None)
+        let! output = Template.replaceMustache model template
         output |> should startWith """Daily Report for 
 # tl;dr
 This is a daily summary of all post which has been supported by dcrop Boost 
@@ -58,12 +59,13 @@ let ``Load simple template from entity`` () =
             |> PipelineProcessData.addProperty "date" (DateTime.Now.ToShortDateString())
             |> PipelineProcessData.addProperty "weight" "10.00"
 
-        let compiler 
-            = NettleEngine.GetCompiler([|
-                new ReadEntityFunction (model) :> Functions.IFunction
-                new EnumerateEntityFunction (model) :> Functions.IFunction
-            |])
-        let execute = compiler.Compile(simpleTemplate)
-        let! output = execute.Invoke(model.properties, System.Threading.CancellationToken.None)
+        //let compiler 
+        //    = NettleEngine.GetCompiler([|
+        //        new ReadEntityFunction (model) :> Functions.IFunction
+        //        new EnumerateEntityFunction (model) :> Functions.IFunction
+        //    |])
+        //let execute = compiler.Compile(simpleTemplate)
+        //let! output = execute.Invoke(model.properties, System.Threading.CancellationToken.None)
+        let! output = Template.replaceMustache model simpleTemplate
         output |> should startWith "This post has been supported by @dcropsboost with 10.00% upvote! Delegate HP to dCropsBoost to help support the project. "
     }

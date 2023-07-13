@@ -268,6 +268,44 @@ This is a daily summary of all post which has been supported by dcrop Boost
 {{/each}}
 ```
 
+15. write_post - a action used to sent submit new post 
+
+  Parameters: 
+    * template - an name of the entity where template is loaded 
+    * title - a tempalte for the title 
+    * tags - a comma separated list of tags to use
+
+```
+{
+    "name": "write_post",
+    "parameters": {
+        "template": "summary_post",
+        "title": "dCropsboost daily upvoted posts collection - {{@FormatDate(@GetDate(), \"dd/MM/yyyy\")}}",
+        "tags": "dcrops,dcropboost,universal-bot"
+    }
+}
+```
+
+16. 
+   
+```
+{
+    "name": "read_comments",
+    "parameters": {
+    "label": "posts"
+    }
+}
+```
+```
+{
+    "name": "get_commented_post",
+    "parameters": {
+    "label": "posts",
+    "parentPostLabel": "parent_posts"
+    }
+}
+```
+
 # Actions Series
 
 There is a new way to write the similar task now. So instead of writing 5 times to stake the five various tokens you can create a one Series action definition and specify the **splitOn** to include all 5 tokens. As a result there will be 5 actinon which will have it onw token used by amount will be the same for all of them. In a case there are other parametesr they will be copied as well to a child actions.

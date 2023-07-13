@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Template.fs" />
     <Compile Include="Hive.Types.fs" />
     <Compile Include="HttpQuery.fs" />
     <Compile Include="Hive.fs" />
@@ -24,6 +25,7 @@
     <Compile Include="Actions\VoteOnPosts.fs" />
     <Compile Include="Actions\LoadTemplate.fs" />
     <Compile Include="Actions\CommentOnPosts.fs" />
+    <Compile Include="Actions\WritePost.fs" />
     <Compile Include="Actions\FlushTokens.fs" />
     <Compile Include="Actions\ActionRegistry.fs" />
   </ItemGroup>

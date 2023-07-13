@@ -15,3 +15,4 @@ type ActionRegistry () as self =
         self.For<Binder>().Use(Variable.bind).Named("variable") |> ignore
         self.For<Binder>().Use(ReadUserComments.bind).Named("read_comments") |> ignore
         self.For<Binder>().Use(GetCommentedPosts.bind).Named("get_commented_post") |> ignore
+        self.For<Binder>().Use(WritePost.bind).Named("write_post") |> ignore        
