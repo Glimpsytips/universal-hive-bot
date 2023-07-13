@@ -286,22 +286,34 @@ This is a daily summary of all post which has been supported by dcrop Boost
 }
 ```
 
-16. 
-   
+16. read_comments - reads all comments done by the give author.
+ 1. 
+  Parameters: 
+    * username - a name of the user which latest comments will be read
+    * commentsCount - a number of comments to read, default is 25
+    * label - a prefix under which comments will be saved 
 ```
 {
     "name": "read_comments",
     "parameters": {
-    "label": "posts"
+        "label": "posts"
+        "username": "name",
+        "commentsCount": "25"
     }
 }
 ```
+
+16. get_commented_post - converts list of comments into a parent posts
+
+  Parameters: 
+    * label - a prefix from which comments will be read
+    * parentPostLabel - a prefix under which comments will be saved 
 ```
 {
     "name": "get_commented_post",
     "parameters": {
-    "label": "posts",
-    "parentPostLabel": "parent_posts"
+        "label": "posts",
+        "parentPostLabel": "parent_posts"
     }
 }
 ```
