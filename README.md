@@ -234,6 +234,90 @@ I am aware that there are a few places where I cna improve the bot. For example,
           }
         },
 
+
+14. load_template - returns a string value from GITHUB's GIST collection, Template is using a templating library to make it more powerfull. There are added two support function to access entity(the bot context object). **ReadEntity** used to read a single type entity and **EnumerateEntity** whixch allows to read a collection based properties(one retunred by ReadComments, ReadPosts actions). 
+
+    Please see the documentation at https://github.com/craigbridges/Nettle/wiki for more details .
+
+ Parameters: 
+    * templateId - a part of ulr fomr ggithub's gist, e.g. <username>/12233423423423423423432423423433/raw/1234534545345345345abcdef1234566778890ab
+    * label - local variable which will store the remplate value for later use
+
+```
+{
+  "name": "load_template",
+  "parameters": {
+    "templateId": "<username>/12233423423423423423432423423433/raw/1234534545345345345abcdef1234566778890ab",
+    "label": "example_template"
+}
+```
+
+Example template: 
+
+```
+Daily Report for {{@GetDate()}}
+
+# tl;dr
+
+This is a daily summary of all post which has been supported by dcrop Boost 
+
+# Voted on posts
+{{ var posts = @EnumerateEntity("post") }}
+{{each posts}}
+  * {{$.name}}
+{{/each}}
+```
+
+15. write_post - a action used to sent submit new post 
+
+  Parameters: 
+    * template - an name of the entity where template is loaded 
+    * title - a tempalte for the title 
+    * tags - a comma separated list of tags to use
+
+```
+{
+    "name": "write_post",
+    "parameters": {
+        "template": "summary_post",
+        "title": "dCropsboost daily upvoted posts collection - {{@FormatDate(@GetDate(), \"dd/MM/yyyy\")}}",
+        "tags": "dcrops,dcropboost,universal-bot"
+    }
+}
+```
+
+16. read_comments - reads all comments done by the give author.
+ 1. 
+  Parameters: 
+    * username - a name of the user which latest comments will be read
+    * commentsCount - a number of comments to read, default is 25
+    * label - a prefix under which comments will be saved 
+```
+{
+    "name": "read_comments",
+    "parameters": {
+        "label": "posts"
+        "username": "name",
+        "commentsCount": "25"
+    }
+}
+```
+
+16. get_commented_post - converts list of comments into a parent posts
+
+  Parameters: 
+    * label - a prefix from which comments will be read
+    * parentPostLabel - a prefix under which comments will be saved 
+```
+{
+    "name": "get_commented_post",
+    "parameters": {
+        "label": "posts",
+        "parentPostLabel": "parent_posts"
+    }
+}
+```
+
 # Actions Series
 
 There is a new way to write the similar task now. So instead of writing 5 times to stake the five various tokens you can create a one Series action definition and specify the **splitOn** to include all 5 tokens. As a result there will be 5 actinon which will have it onw token used by amount will be the same for all of them. In a case there are other parametesr they will be copied as well to a child actions.

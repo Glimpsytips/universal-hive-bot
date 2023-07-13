@@ -1,4 +1,4 @@
-﻿module ReadPosts
+﻿module WritePosts
 
 open System
 open PipelineResult

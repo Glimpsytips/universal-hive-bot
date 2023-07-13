@@ -3,8 +3,8 @@
 open System
 open PipelineResult
 open Types 
-open Functional.ETL.Pipeline.PipelineProcessData
-open Functional.ETL.Pipeline
+open Pipeline
+open PipelineProcessData
 open PostId
 open FSharp.Control
 
@@ -26,16 +26,22 @@ let private createTheComment username body (post: PostIdentification) =
     let metadata = """{"app":"universalbot/0.10.0"}"""
     Hive.createComment username body metadata post.author post.permlink post.permlink ""
 
-let private getTemplate templateId (entity: PipelineProcessData<UniversalHiveBotResutls>) = 
+let private getTemplateBody templateId (entity: PipelineProcessData<UniversalHiveBotResutls>) = 
     (Map.getValueWithDefault entity.properties templateId ("" :> obj)).ToString()
 
+let private createCommentsBody templateBody entity =
+    templateBody
+    |> Template.replaceMustache entity 
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
+
 let action hiveUrl collectionHandle template username (entity: PipelineProcessData<UniversalHiveBotResutls>) = 
+    let templateBody =  (getTemplateBody template entity)
     let postToCommentOn =
-        readPropertyAsType entity collectionHandle
-        |> Option.defaultValue Seq.empty
+        enumerateProperties collectionHandle entity
         |> TaskSeq.ofSeq
         |> TaskSeq.filterAsync (filterMessagesWithoutPreviousComment hiveUrl username)
-        |> TaskSeq.map (createTheComment username (getTemplate template entity))
+        |> TaskSeq.map (createTheComment username (createCommentsBody templateBody entity))
         |> TaskSeq.map (Hive.scheduleSinglePostingOperation ModuleName "vote")
         |> TaskSeq.toSeq
     
