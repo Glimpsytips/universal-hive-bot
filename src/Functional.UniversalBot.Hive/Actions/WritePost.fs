@@ -12,10 +12,10 @@ open FSharp.Control
 let ModuleName = "WritePost"
 
 let private createPost username body title (tags: string array) = 
-    let tags = String.Join("\",\"", tags)
-    let metadata = $"""{{"app":"universalbot/0.12.0", "tags": ["{tags}"]}}"""
-    let permlink = title |> String.replace ' ' '-'
-    Hive.createComment username body metadata "" "" permlink title
+    let tagsList = String.Join("\",\"", tags)
+    let metadata = $"""{{"app":"universalbot/0.12.0", "tags": ["{tagsList}"]}}"""
+    let permlink = title |> String.replace ' ' '-' |> String.toLower
+    Hive.createComment username body metadata "" tags.[0] permlink title
 
 let private getTemplate templateId (entity: PipelineProcessData<UniversalHiveBotResutls>) = 
     (Map.getValueWithDefault entity.properties templateId ("" :> obj)).ToString()

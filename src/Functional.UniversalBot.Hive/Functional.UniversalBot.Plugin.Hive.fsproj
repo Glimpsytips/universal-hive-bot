@@ -1,46 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-      <BaseOutputPath>..\..\build\debugBuild</BaseOutputPath>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <BaseOutputPath>..\..\build\debugBuild</BaseOutputPath>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="Template.fs" />
-    <Compile Include="Hive.Types.fs" />
-    <Compile Include="HttpQuery.fs" />
-    <Compile Include="Hive.fs" />
-    <Compile Include="CondenserApi.Types.fs" />
-    <Compile Include="CondenserApi.fs" />
-    <Compile Include="BridgeAPI.Types.fs" />
-    <Compile Include="BridgeAPI.fs" />
-    <Compile Include="TemplateAPI.fs" />
-    <Compile Include="PostId.fs" />
-    <Compile Include="Actions\WritePosts.fs" />
-    <Compile Include="Actions\Variable.fs" />
-    <Compile Include="Actions\ReadPosts.fs" />
-    <Compile Include="Actions\ReadUserComments.fs" />
-    <Compile Include="Actions\GetCommentedPosts.fs" />
-    <Compile Include="Actions\VoteOnPosts.fs" />
-    <Compile Include="Actions\LoadTemplate.fs" />
-    <Compile Include="Actions\CommentOnPosts.fs" />
-    <Compile Include="Actions\WritePost.fs" />
-    <Compile Include="Actions\FlushTokens.fs" />
-    <Compile Include="Actions\ActionRegistry.fs" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Template.fs" />
+        <Compile Include="Hive.Types.fs" />
+        <Compile Include="HttpQuery.fs" />
+        <Compile Include="Hive.fs" />
+        <Compile Include="CondenserApi.Types.fs" />
+        <Compile Include="CondenserApi.fs" />
+        <Compile Include="BridgeAPI.Types.fs" />
+        <Compile Include="BridgeAPI.fs" />
+        <Compile Include="TemplateAPI.fs" />
+        <Compile Include="PostId.fs" />
+        <Compile Include="Actions\WritePosts.fs" />
+        <Compile Include="Actions\Variable.fs" />
+        <Compile Include="Actions\ReadPosts.fs" />
+        <Compile Include="Actions\ReadUserComments.fs" />
+        <Compile Include="Actions\GetCommentedPosts.fs" />
+        <Compile Include="Actions\VoteOnPosts.fs" />
+        <Compile Include="Actions\LoadTemplate.fs" />
+        <Compile Include="Actions\CommentOnPosts.fs" />
+        <Compile Include="Actions\WritePost.fs" />
+        <Compile Include="Actions\FlushTokens.fs" />
+        <Compile Include="Actions\ActionRegistry.fs" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="HiveAPI" Version="0.3.0" />
-    <PackageReference Include="Nettle" Version="3.0.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="HiveAPI" Version="0.3.0" />
+        <PackageReference Include="Nettle" Version="3.0.0" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Functional.UniversalBot.Core\Functional.UniversalBot.Core.fsproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Functional.UniversalBot.Core\Functional.UniversalBot.Core.fsproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="7.0.300" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Update="FSharp.Core" Version="7.0.300" />
+    </ItemGroup>
 
 </Project>
