@@ -1,21 +1,18 @@
 namespace Functional.UniversalBot.CLI2
 
 open System
-open System.Collections.Generic
-open System.Linq
-open System.Threading.Tasks
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open Serilog
+open Serilog.Settings.Configuration
 open Microsoft.Extensions.Configuration
 open System.IO
-open Workers
 
 module Program =
     let private createLogger (hostingContext: HostBuilderContext) (logger: LoggerConfiguration) = 
         logger
             .ReadFrom
-            .Configuration(hostingContext.Configuration)
+            .Configuration(hostingContext.Configuration, ConfigurationAssemblySource.AlwaysScanDllFiles)
         |> ignore
 
     let private addMultipleConfigFiles path (builder: IConfigurationBuilder)  =
