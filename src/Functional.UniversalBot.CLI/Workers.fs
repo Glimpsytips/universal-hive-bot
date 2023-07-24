@@ -55,22 +55,23 @@ type ScheduleWorker(config: Types.Configuration, timeProvider: unit -> DateTime,
 
             do! delayStart ()
             while not ct.IsCancellationRequested do
-                
-                if (areDateEqulaForMinutePrecision startTime DateTime.Now) 
-                then 
-                    do! 
-                        60 
-                        |> TimeSpan.FromSeconds
-                        |> Task.Delay
+                try 
+                    if (areDateEqulaForMinutePrecision startTime DateTime.Now) 
+                    then 
+                        do! 
+                            60 
+                            |> TimeSpan.FromSeconds
+                            |> Task.Delay
 
-                logger.LogDebug("Schedule Worker running at: {time}", DateTimeOffset.Now)
+                    logger.LogDebug("Schedule Worker running at: {time}", DateTimeOffset.Now)
                                 
-                let results = 
                     pipelines
                     |> TaskSeq.filter (canExecute timeProvider startTime)
                     |> TaskSeq.map processPipeline
                     |> TaskSeq.toArray
-
+                with 
+                | ex -> 
+                    logger.LogError(ex.Message)
                 startTime <- DateTime.Now
         }
 
@@ -85,11 +86,15 @@ type ContinousWorker(config: Types.Configuration, logger: ILogger<ContinousWorke
                     
             do! delayStart ()
             while not ct.IsCancellationRequested do
-                logger.LogDebug ("Continous Worker running at: {time}", DateTimeOffset.Now)
+                try
+                    logger.LogDebug ("Continous Worker running at: {time}", DateTimeOffset.Now)
                                     
-                let results = 
-                    pipelines
-                    |> TaskSeq.map processPipeline
-                    |> TaskSeq.toArray
-                ()
+                    let results = 
+                        pipelines
+                        |> TaskSeq.map processPipeline
+                        |> TaskSeq.toArray
+                    ()
+                with 
+                | ex -> 
+                    logger.LogError(ex.Message)
         }
