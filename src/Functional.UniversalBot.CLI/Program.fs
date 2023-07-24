@@ -38,6 +38,7 @@ module Program =
                 services.AddHostedService<Workers.ScheduleWorker>() |> ignore
                 services.AddHostedService<Workers.ContinousWorker>() |> ignore)
             .UseSerilog(createLogger)
+            .UseSystemd()
 
     [<EntryPoint>]
     let main args =
